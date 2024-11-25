@@ -8,17 +8,17 @@
  * scopes 'bot' and 'applications.commands', e.g.
  * https://discord.com/oauth2/authorize?client_id=940762342495518720&scope=bot+applications.commands&permissions=139586816064
  */
-const std::string    BOT_TOKEN    = "add your token here";
+const std::string    BOT_TOKEN    = "MTE4Mzc1NDI1NzY3NDAyNzA1OA.GeF2za.W8HyM0EsqJXcYfHWJJst0wb8OnJLYlgikSSoSs";
 
 int main()
 {
-	/* Create bot cluster */
+	/* 連線至Discord Bot */
 	dpp::cluster bot(BOT_TOKEN);
 
-	/* Output simple log messages to stdout */
+	/* 輸出簡單日誌訊息至控制台 */
 	bot.on_log(dpp::utility::cout_logger());
 
-	/* Register slash command here in on_ready */
+	/* 註冊斜線指令在這裡 */
 	bot.on_ready([&bot](const dpp::ready_t& event) {
 		/* Wrap command registration in run_once to make sure it doesnt run on every full reconnection */
 		if (dpp::run_once<struct register_bot_commands>()) {
@@ -30,7 +30,7 @@ int main()
 		}
 	});
 
-	/* Handle slash command with the most recent addition to D++ features, coroutines! */
+	/* 接收斜線指令並執行動作Handle slash command with the most recent addition to D++ features, coroutines! */
 	bot.on_slashcommand([](const dpp::slashcommand_t& event) -> dpp::task<void> {
 		if (event.command.get_command_name() == "ping") {
 			co_await event.co_reply("Pong!");
@@ -38,7 +38,7 @@ int main()
 		co_return;
 	});
 
-	/* Start the bot */
+	/* 啟動機器人 */
 	bot.start(dpp::st_wait);
 
 	return 0;
