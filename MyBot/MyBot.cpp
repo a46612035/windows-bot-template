@@ -1,6 +1,9 @@
 #include "MyBot.h"
 #include <dpp/dpp.h>
-
+#include<fstream>
+#include<iostream>
+std::ifstream in;
+std::ofstream out;
 /* Be sure to place your token in the line below.
  * Follow steps here to get a token:
  * https://dpp.dev/creating-a-bot-application.html
@@ -8,10 +11,17 @@
  * scopes 'bot' and 'applications.commands', e.g.
  * https://discord.com/oauth2/authorize?client_id=940762342495518720&scope=bot+applications.commands&permissions=139586816064
  */
-const std::string    BOT_TOKEN    = "MTE4Mzc1NDI1NzY3NDAyNzA1OA.GeF2za.W8HyM0EsqJXcYfHWJJst0wb8OnJLYlgikSSoSs";
+
 
 int main()
 {
+	in.open("bot_token.txt");
+	if (in.fail()) {
+		std::cout << "Bot Token load fail!";
+	}
+	std::string temp_token;
+	in >> temp_token;
+	const std::string    BOT_TOKEN = temp_token;
 	/* ³s½u¦ÜDiscord Bot */
 	dpp::cluster bot(BOT_TOKEN);
 
