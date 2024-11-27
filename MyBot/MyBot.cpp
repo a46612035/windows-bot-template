@@ -73,7 +73,13 @@ int main()
 			// 2. 將 Snowflake ID 轉換為 Unix 時間戳（毫秒）
 			std::time_t command_timestamp = snowflake_to_unix_timestamp(event.command.id);
 			// 計算網絡延遲（用戶發送指令的時間 - bot 接收到的時間）
-			long long network_latency = timestamp_received - command_timestamp;
+			long long network_latency;
+			if (command_timestamp > timestamp_received) {
+				network_latency = command_timestamp - timestamp_received;
+			}
+			else {
+				network_latency = timestamp_received- command_timestamp;
+			}
 			// 發送初步回應
 			co_await event.co_reply("處理中...");
 			// 4. 計算延遲（Bot 收到指令到回應的時間差）
